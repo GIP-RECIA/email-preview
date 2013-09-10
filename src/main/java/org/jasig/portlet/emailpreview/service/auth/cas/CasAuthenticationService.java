@@ -18,11 +18,14 @@
  */
 package org.jasig.portlet.emailpreview.service.auth.cas;
 
+import java.util.Map;
+
 import org.apache.http.auth.Credentials;
 import org.jasig.cas.client.validation.Assertion;
 import org.jasig.portlet.emailpreview.MailStoreConfiguration;
 import org.jasig.portlet.emailpreview.service.auth.BaseCredentialsAuthenticationService;
 import org.jasig.portlet.emailpreview.service.auth.SimplePasswordAuthenticator;
+import org.springframework.util.StringUtils;
 
 import javax.mail.Authenticator;
 import javax.portlet.PortletRequest;
@@ -36,6 +39,9 @@ public class CasAuthenticationService extends BaseCredentialsAuthenticationServi
     protected String serviceUrl;  
     
     protected String CAS_ASSERTION_KEY = "CAS_ASSERTION_KEY";
+    
+    /** If set use this attribute name to retrieve mail from Portal user info. */
+    private String mailPortalUserInfoAttribute;
     
     public void setCasTicketService(ICASProxyTicketService casTicketService) {
 		this.casTicketService = casTicketService;
@@ -79,8 +85,18 @@ public class CasAuthenticationService extends BaseCredentialsAuthenticationServi
         throw new UnsupportedOperationException("CAS ticket doesn't make sense with Exchange integration");
     }
 
+    @SuppressWarnings("unchecked")
     public String getMailAccountName(PortletRequest request, MailStoreConfiguration config) {
-    	String proxyPrincipalname = getProxyPrincipalname(request);
+    	String proxyPrincipalname = null;
+    	
+    	if (StringUtils.hasText(this.mailPortalUserInfoAttribute)) {
+    		// If mailPortalUserInfoAttribute supplied we search for mail account name in Portal user info.
+			final Map<String, String> userInfo = (Map<String, String>) request.getAttribute(PortletRequest.USER_INFO);
+    		proxyPrincipalname = userInfo.get(this.mailPortalUserInfoAttribute);
+    	} else {
+    		proxyPrincipalname = getProxyPrincipalname(request);
+    	}
+    	
         return proxyPrincipalname;
     }
 
@@ -91,5 +107,23 @@ public class CasAuthenticationService extends BaseCredentialsAuthenticationServi
     public void setKey(String key) {
         this.key = key;
     }
+
+	/**
+	 * Getter of mailPortalUserInfoAttribute.
+	 *
+	 * @return the mailPortalUserInfoAttribute
+	 */
+	public String getMailPortalUserInfoAttribute() {
+		return mailPortalUserInfoAttribute;
+	}
+
+	/**
+	 * Setter of mailPortalUserInfoAttribute.
+	 *
+	 * @param mailPortalUserInfoAttribute the mailPortalUserInfoAttribute to set
+	 */
+	public void setMailPortalUserInfoAttribute(String mailPortalUserInfoAttribute) {
+		this.mailPortalUserInfoAttribute = mailPortalUserInfoAttribute;
+	}
 
 }
