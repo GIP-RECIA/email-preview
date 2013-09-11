@@ -79,7 +79,7 @@ public class AjaxUpdateInboxFolderController extends BaseEmailController {
             		jsonData.put(originalName, displayName);
 
                 	if(selectedFolder.equals(originalName)){
-                		jsonData.put(SELECTED_OPTION, displayName);
+                		jsonData.put(SELECTED_OPTION, originalName);
                 	}
                 }
     		}
