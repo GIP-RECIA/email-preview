@@ -425,7 +425,7 @@ var jasig = jasig || {};
 		                		selected = response;
 		                	}
 		                	else{
-		                    	options[options.length] = new Option(response,response);
+		                    	options[options.length] = new Option(response, index);
 		                    }
 		                });  
 		                // Sort by name
@@ -487,7 +487,7 @@ var jasig = jasig || {};
             that.locate("allFolders").change(
             	function(){
                     clearCache = "true";
-	            	getEmail(that, 0, that.options.batchSize, undefined, undefined,that.locate("allFolders").val());
+	            	getEmail(that, 0, that.options.batchSize, undefined, undefined,that.locate("allFolders").attr('value'));
 	            	location.reload();
             	});             
             that.locate("inboxLink").attr("href", account.inboxUrl);
