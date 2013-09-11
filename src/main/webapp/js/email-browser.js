@@ -425,7 +425,7 @@ var jasig = jasig || {};
 		                		selected = response;
 		                	}
 		                	else{
-		                    	options[options.length] = new Option(response,response);
+		                    	options[options.length] = new Option(response, index);
 		                    }
 		                });  
 		                // Sort by name

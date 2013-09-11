@@ -73,7 +73,7 @@ public class AjaxUpdateInboxFolderController extends BaseEmailController {
      }else{
             for (Folder folderName : accountDao.getAllUserInboxFolders(req)){
             	if ((folderName.getType() & javax.mail.Folder.HOLDS_MESSAGES) != 0) {
-            		jsonData.put(folderName.toString(), folderName.toString());
+            		jsonData.put(folderName.getFullName(), folderName.toString());
 
                 	if(selectedFolder.equals(folderName.toString())){
                 		jsonData.put(SELECTED_OPTION,folderName.toString());
