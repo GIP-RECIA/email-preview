@@ -38,13 +38,11 @@
     <context:annotation-config />
 
 	<!-- Override javamailAccountService wich is component scan to be wrapped in a TranslatorAccountService.  -->
-	<!--
 	<bean id="javamailAccountService" class="org.jasig.portlet.emailpreview.translate.TranslatorAccountService">
 		<property name="backingService">
 			<bean class="org.jasig.portlet.emailpreview.dao.javamail.JavamailAccountService" />
 		</property>
 	</bean>
- 	 -->
  	 
     <ehcache:annotation-driven />
     <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"/>
