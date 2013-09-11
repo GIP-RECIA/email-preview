@@ -7,7 +7,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.jasig.portlet</groupId>
+    <groupId>org.esco.portlet</groupId>
     <artifactId>email-preview</artifactId>
     <packaging>war</packaging>
 
