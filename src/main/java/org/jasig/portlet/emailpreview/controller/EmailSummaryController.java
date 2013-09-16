@@ -42,6 +42,7 @@ import org.jasig.portlet.emailpreview.service.link.ILinkServiceRegistry;
 import org.jasig.portlet.emailpreview.util.EmailAccountUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.ModelAndView;
@@ -63,6 +64,9 @@ public class EmailSummaryController extends BaseEmailController {
     public final static String ALLOW_DELETE_PREFERENCE = "allowDelete";
 
     public final static String SUPPORTS_TOGGLE_SEEN_KEY = "supportsToggleSeen";
+    
+    public final static String OPEN_INBOX_IN_ANOTHER_TAB_KEY = "openInboxInAnotherTab";
+    
     private final static String SHOW_CONFIG_LINK_KEY = "showConfigLink";
 
     private final static String DEFAULT_WELCOME_TITLE = "Welcome to Email Preview";
@@ -119,6 +123,9 @@ public class EmailSummaryController extends BaseEmailController {
 
                 String emailAddress = EmailAccountUtils.determineUserEmailAddress(req, config, authService);
                 model.put("emailAddress", emailAddress);
+                
+                boolean openInAnotherTab = EmailSummaryController.isOpenInboxInAnotherTab(config);
+                model.put(MailPreferences.OPEN_INBOX_IN_ANOTHER_TAB.getKey(), openInAnotherTab);
 
                 return new ModelAndView(getKey(), model);
             }
@@ -164,6 +171,10 @@ public class EmailSummaryController extends BaseEmailController {
                 model.put(MSG_CONTAINER,"table");
 
                 model.put(MailPreferences.ALLOW_RENDERING_EMAIL_CONTENT.getKey(), config.getAllowRenderingEmailContent());    
+                
+                boolean openInAnotherTab = EmailSummaryController.isOpenInboxInAnotherTab(config);
+                model.put(MailPreferences.OPEN_INBOX_IN_ANOTHER_TAB.getKey(), openInAnotherTab);
+                
                 return new ModelAndView(getKey(), model);
             }
         },
@@ -208,6 +219,9 @@ public class EmailSummaryController extends BaseEmailController {
                 model.put(MSG_CONTAINER,"div.message_infos");
 
                 model.put(MailPreferences.ALLOW_RENDERING_EMAIL_CONTENT.getKey(), config.getAllowRenderingEmailContent());   
+
+                boolean openInAnotherTab = EmailSummaryController.isOpenInboxInAnotherTab(config);
+                model.put(MailPreferences.OPEN_INBOX_IN_ANOTHER_TAB.getKey(), openInAnotherTab);
                 
                 return new ModelAndView(getKey(), model);
             }
@@ -321,6 +335,20 @@ public class EmailSummaryController extends BaseEmailController {
         
         return rslt;
 
+    }
+
+    /**
+     * Check the configuration to get inbox opening mode.
+     * 
+     * @param config
+     * @return
+     */
+    public static boolean isOpenInboxInAnotherTab(final MailStoreConfiguration config) {
+        // True by default
+        final String openInAnotherTabPref = config.getAdditionalProperties().get(OPEN_INBOX_IN_ANOTHER_TAB_KEY);
+        boolean openInAnotherTab = !StringUtils.hasText(openInAnotherTabPref)|| Boolean.valueOf(openInAnotherTabPref);
+        
+        return openInAnotherTab;
     }
 
 }

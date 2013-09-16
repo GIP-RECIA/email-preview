@@ -112,6 +112,10 @@
     }
 </style>
 
+<c:if test="${openInboxInAnotherTab}">
+	<c:set var="inboxAnchorTarget" value="target=\"_blank\"" />
+</c:if>
+
 <div id="${n}splash" class="emailSplash">
     <div class="graphic">
         <span class="unreadContainer unreadCountCircle" style="display: none;"></span>
@@ -121,14 +125,14 @@
         <p class="unreadContainer" style="display: none;"><spring:message code="rollup.summary.preLink"/> <b><span class="unreadCount"></span> <spring:message code="rollup.summary.linkText"/></b> <spring:message code="rollup.summary.postLinkPreTotal"/> <span class="totalCount"></span> <spring:message code="rollup.summary.postTotal"/><br />
         <span class="stats"><strong><spring:message code="common.quota"/>: </strong><span class="email-quota-usage"></span> / <span class="email-quota-limit"></span><br /></span>
         <c:if test="${not empty inboxUrl}">
-            &bull; <a href="${inboxUrl}" target="_blank" title="<spring:message code="rollup.summary.inboxLink.tooltip"/>"><spring:message code="rollup.summary.inboxLink"/></a> <spring:message code="rollup.summary.inboxPostLink"/><br />
+            &bull; <a href="${inboxUrl}" ${inboxAnchorTarget} title="<spring:message code="rollup.summary.inboxLink.tooltip"/>"><spring:message code="rollup.summary.inboxLink"/></a> <spring:message code="rollup.summary.inboxPostLink"/><br />
         </c:if>
         &bull; <a href="<c:out value="${focusOnPreview == 'true' ?  showPreviewUrlMaximized : showPreviewUrl}"/>" title="<spring:message code="rollup.summary.previewLink.tooltip"/>"><spring:message code="rollup.summary.previewLink"/></a> <spring:message code="rollup.summary.previewPostLink"/></p>
     </div>
     <ul class="inbox">
         <c:if test="${not empty inboxUrl}">
             <li>
-                <a href="${inboxUrl}" target="_blank" title="<spring:message code="rollup.inbox.linkText.tooltip"/>"><img alt="<spring:message code="rollup.inbox.linkText"/>" src="<rs:resourceURL value="/rs/famfamfam/silk/1.3/email.png"/>"/> <spring:message code="rollup.inbox.linkText"/></a>
+                <a href="${inboxUrl}" ${inboxAnchorTarget} title="<spring:message code="rollup.inbox.linkText.tooltip"/>"><img alt="<spring:message code="rollup.inbox.linkText"/>" src="<rs:resourceURL value="/rs/famfamfam/silk/1.3/email.png"/>"/> <spring:message code="rollup.inbox.linkText"/></a>
             </li>
         </c:if>
         <c:if test="${supportsEdit}">
