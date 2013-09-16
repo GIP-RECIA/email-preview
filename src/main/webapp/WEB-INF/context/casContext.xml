@@ -60,6 +60,7 @@
 	<bean id="casAuthenticationService"
 		class="org.jasig.portlet.emailpreview.service.auth.cas.CasAuthenticationService"
 		p:casTicketService-ref="casTicketService" 
-		p:serviceUrl="${cas-config.serviceUrl}" />
+		p:serviceUrl="${cas-config.serviceUrl}"
+		p:mailPortalUserInfoAttribute="${cas-config.mailPortalUserInfoAttribute:}" />
 
 </beans>
