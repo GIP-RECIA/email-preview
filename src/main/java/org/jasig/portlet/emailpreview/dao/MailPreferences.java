@@ -52,8 +52,11 @@ public enum MailPreferences {
      */
     
     MAIL_ACCOUNT("username"),
-    PASSWORD("password");
+    PASSWORD("password"),
 
+    /** If true : hide any protocol configuration form users. */ 
+    ADMIN_ONLY_PROTOCOL("adminOnlyProtocol");
+    
     /*
      * Implementation 
      */

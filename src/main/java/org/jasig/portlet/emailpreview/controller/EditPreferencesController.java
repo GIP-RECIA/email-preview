@@ -90,7 +90,12 @@ public final class EditPreferencesController extends BaseEmailController {
 
         // Available protocols
         model.put("protocols", filterNonUserProtocols(serviceBroker.getSupportedProtocols()));
-        model.put("adminOnlyProtocol", protocolSetToNonUserProtocol(config.getProtocol()));
+        
+        // Search preferences for ADMIN_ONLY_PROTOCOL pref.
+        boolean adminOnlyProtocolPref = Boolean.valueOf(
+        		req.getPreferences().getValue(MailPreferences.ADMIN_ONLY_PROTOCOL.getKey(), "false"));
+        // If ADMIN_ONLY_PROTOCOL pref is set to true then force protocol edition hiding 
+        model.put("adminOnlyProtocol", adminOnlyProtocolPref || protocolSetToNonUserProtocol(config.getProtocol()));
 
         // AuthN info
         Map<String,IAuthenticationService> authServices = new HashMap<String,IAuthenticationService>();
