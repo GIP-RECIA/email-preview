@@ -48,6 +48,11 @@
     <portlet:renderURL var="configUrl" portletMode="CONFIG"/>
     <p style="text-align: right;"><a href="${ configUrl }">Configure portlet</a></p>
 </c:if>
+
+<c:if test="${openInboxInAnotherTab}">
+	<c:set var="inboxAnchorTarget" value="target=\"_blank\"" />
+</c:if>
+
 <div class="email-preview">
 <div data-role="content" id="${n}container" class="email-container portlet" xmlns:rsf="http://ponder.org.uk">
     <div class="loading-message"></div>
@@ -63,7 +68,7 @@
         <form name="inboxForm">
         	<div data-role="navbar" class="ui-body-a">
         	  <ul>
-                <li><a data-icon="check" data-iconpos="top" class="inbox-link" href="" target="_blank"><spring:message code="preview.toolbar.inbox"/></a></li>
+                <li><a data-icon="check" data-iconpos="top" class="inbox-link" href="" ${inboxAnchorTarget}><spring:message code="preview.toolbar.inbox"/></a></li>
                 <li><a data-icon="refresh" data-iconpos="top" class="refresh-link email-action-link" href="javascript:;"><spring:message code="preview.toolbar.refresh"/></a></li>
                 <c:if test="${allowDelete}">             
                 	<li><a data-icon="delete" data-iconpos="top" class="delete-link email-action-link" href="javascript:;"><span><spring:message code="preview.toolbar.deleteSelected"/></span></a></li>

@@ -40,6 +40,9 @@ public enum MailPreferences {
     USERNAME_SUFFIX("usernameSuffix"),
     MARK_MESSAGES_AS_READ("markMessagesAsRead"),
     ALLOW_RENDERING_EMAIL_CONTENT("allowRenderingEmailContent"),
+    
+    /** Inbox opening mode : in another tab or not. */
+    OPEN_INBOX_IN_ANOTHER_TAB("openInboxInAnotherTab"),
 
     /*
      * Settings used by the Exchange DAO

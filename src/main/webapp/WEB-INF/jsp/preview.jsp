@@ -46,6 +46,10 @@
     <p style="text-align: right;"><a href="${ configUrl }">Configure portlet</a></p>
 </c:if>
 
+<c:if test="${openInboxInAnotherTab}">
+	<c:set var="inboxAnchorTarget" value="target=\"_blank\"" />
+</c:if>
+
 <div id="${n}container" class="email-container portlet" xmlns:rsf="http://ponder.org.uk">
 
     <div class="loading-message"></div>
@@ -63,7 +67,7 @@
 
             <p>
                 <c:if test="${not empty inboxUrl}">
-                    <a class="inbox-link email-action-link" href="" target="_blank">
+                    <a class="inbox-link email-action-link" href="" ${inboxAnchorTarget}>
                 </c:if>
                 <img alt="Refresh" src="<rs:resourceURL value="/rs/famfamfam/silk/1.3/email.png"/>"/>&nbsp;<spring:message code="preview.toolbar.inbox"/>
                 <c:if test="${not empty inboxUrl}">
